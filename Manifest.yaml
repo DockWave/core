@@ -1,0 +1,23 @@
+module:
+  version: '0.1.0'
+  name: dw/core
+  language: php
+  dist: "https://github.com/DockWave/core"
+  author:
+    name: "Oleksii Bielokudrenko"
+    email: "oleksii@bielokudrenko.family"
+  dependencies: []
+  supported:
+    - drlenux/core: 2.0.1
+    - noname/core: 2.0.0
+  events:
+    - on_request
+    - on_response
+    - on_error
+  similarity:
+    -
+      language: go
+      dist: ~
+    -
+      language: nodejs
+      dist: ~

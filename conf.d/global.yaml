@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  logger: 0 # 1 - enable | 0 - disable
+  cache-limit-items: 100
+
+routing:
+  github:
+    uri: /github
+    method: proxy
+    to: https://github.com
+    cache:
+      enable: 1
+      ttl: 10
+
+  auth:
+    uri: /auth
+    method: curl
+    to: service.auth
+
+  payment:
+    uri: /pay
+    method: queue
+    to: queue.rbt
+
+  assets:
+    uri: /assets
+    method: proxy
+    to: service.assets
+    cache:
+      enable: 1
+      ttl: 600 # 10 minutes

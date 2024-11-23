@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - name: app-container
+          image: your-dockerhub-user/app-image:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CONFIG_PATH
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: CONFIG_PATH
+            - name: SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SERVER_PORT
+            - name: KEY_PASSPHRASE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: KEY_PASSPHRASE
+          volumeMounts:
+            - name: certs-volume
+              mountPath: /app/certs
+              readOnly: true
+      volumes:
+        - name: certs-volume
+          secret:
+            secretName: app-secrets
